@@ -25,17 +25,14 @@ class Config:
     """Configuration class for Argo workflow reporting."""
 
     def __init__(self):
-        self.api_url = os.getenv(
-            'ARGO_API_URL',
-            'https://workflows.argocd.paidmedia.tda.link/api/v1/workflows/default'
-        )
+        self.api_url = os.getenv('ARGO_API_URL','')
         self.bearer_token = os.getenv('ARGO_BEARER_TOKEN', '')
         self.namespace = os.getenv('ARGO_NAMESPACE', 'default')
         self.workflow_limit = int(os.getenv('ARGO_WORKFLOW_LIMIT', '1000'))
         self.output_file = None  # Will be set dynamically
 
         # S3 Configuration
-        self.s3_bucket = os.getenv('S3_BUCKET', 'paidmedia-datalake-dbt-docs')
+        self.s3_bucket = os.getenv('S3_BUCKET', '')
         self.s3_prefix = os.getenv('S3_PREFIX', 'argo-reports/')
         self.s3_region = os.getenv('AWS_REGION', 'eu-central-1')
 
