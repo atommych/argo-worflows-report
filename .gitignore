@@ -12,6 +12,7 @@ __pycache__/
 venv/
 env/
 ENV/
+.env.example
 
 # Output files
 *.html
@@ -23,15 +24,3 @@ ENV/
 *.swp
 *.swo
 *~
-# Copy this file to .env and fill in your actual values
-# DO NOT commit the .env file to git!
-
-# Required: Your Argo Workflows bearer token
-ARGO_BEARER_TOKEN=your-token-here
-
-# Optional: Override defaults
-# ARGO_API_URL=https://workflows.argocd.paidmedia.tda.link/api/v1/workflows/default
-# ARGO_NAMESPACE=default
-# ARGO_WORKFLOW_LIMIT=1000
-# ARGO_OUTPUT_FILE=./argo_daily_wfs.html
-
