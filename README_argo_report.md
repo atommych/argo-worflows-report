@@ -96,6 +96,24 @@ Generate a report spanning multiple days:
 ./dev.sh --date 2025-01-01 --days 7
 ```
 
+### Filter by Workflow Name
+
+Filter workflows by name using regex patterns:
+
+```bash
+# Exact workflow name
+./dev.sh --workflow "my-workflow" --date 2025-10-15 --days 30
+
+# Pattern matching (all workflows starting with "etl-")
+./dev.sh --workflow "^etl-"
+
+# Multiple patterns (workflows containing "data" or "sync")
+./dev.sh --workflow "data|sync"
+
+# Combine with other filters
+./dev.sh --workflow "^daily-" 
+```
+
 ### Custom Output File
 
 Specify a custom output file:

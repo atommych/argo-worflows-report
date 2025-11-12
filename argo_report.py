@@ -3,6 +3,7 @@ import sys
 import json
 import logging
 import argparse
+import re
 from datetime import datetime, timedelta
 from typing import Dict, Any, Optional
 
@@ -398,6 +399,11 @@ def main():
         default=1,
         help='Number of days to include in report (default: 1)'
     )
+    parser.add_argument(
+        '--workflow',
+        type=str,
+        help='Filter by workflow name (supports regex patterns)'
+    )
 
     args = parser.parse_args()
 
@@ -453,13 +459,25 @@ def main():
     # Filter by date range
     df_filtered = filter_by_date_range(df_wf, start_date, end_date)
 
+    # Filter by workflow name if specified
+    if args.workflow:
+        try:
+            pattern = re.compile(args.workflow)
+            df_filtered = df_filtered[df_filtered['workflow'].apply(
+                lambda x: bool(pattern.search(str(x))) if pd.notna(x) else False
+            )]
+            logger.info(f"Filtered by workflow pattern: '{args.workflow}', found {len(df_filtered)} workflows")
+        except re.error as e:
+            logger.error(f"Invalid regex pattern '{args.workflow}': {e}")
+            sys.exit(1)
+
     if df_filtered.empty:
-        logger.warning(f"No workflows found for the specified date range.")
+        logger.warning(f"No workflows found for the specified filters.")
         sys.exit(0)
 
     # Print summary statistics
     print_summary_stats(df_filtered)
-
+    logger.warning(f"No workflows found for the specified date range.")
     # Create visualization
     create_timeline_chart(df_filtered, config.output_file)
 
