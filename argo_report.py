@@ -48,18 +48,19 @@ class Config:
             headers["Authorization"] = f"Bearer {self.bearer_token}"
         return headers
 
-    def build_url(self, phase: str = 'Succeeded') -> str:
+    def build_url(self, phase: str) -> str:
         """Build the API URL with query parameters."""
+        phase_filter = f"&listOptions.labelSelector=workflows.argoproj.io/phase={phase}&" if phase else ""
         return (
-            f"{self.api_url}?"
-            f"listOptions.labelSelector=workflows.argoproj.io/phase={phase}&"
+            f"{self.api_url}?"            
             f"listOptions.limit={self.workflow_limit}"
+            f"{phase_filter}"
         )
 
     def generate_output_filename(
         self,
         start_date: datetime,
-        phase: str = 'Succeeded',
+        phase: str,
         days: int = 1,
         custom_output: Optional[str] = None
     ) -> str:
@@ -83,7 +84,7 @@ class Config:
         parts = ['argo_wfs', date_str]
 
         # Add phase if not the default "Succeeded"
-        if phase.lower() != 'succeeded':
+        if phase:
             parts.append(f'status_{phase.lower()}')
 
         # Add days if more than 1
@@ -168,7 +169,7 @@ def json_to_df(json_data: Dict[str, Any]) -> pd.DataFrame:
     return pd.DataFrame(flat_table)
 
 
-def fetch_workflows(config: Config, phase: str = 'Succeeded') -> Optional[Dict[str, Any]]:
+def fetch_workflows(config: Config, phase: str) -> Optional[Dict[str, Any]]:
     """
     Fetch workflows from Argo API.
 
@@ -379,7 +380,6 @@ def main():
     parser.add_argument(
         '--phase',
         type=str,
-        default='Succeeded',
         choices=['Succeeded', 'Failed', 'Running', 'Pending'],
         help='Workflow phase to filter (default: Succeeded)'
     )
