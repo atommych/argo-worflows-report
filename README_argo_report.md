@@ -67,7 +67,7 @@ With Docker:
 
 ```bash
 source .env
-./dev.sh
+./dev.sh python argo_report.py
 ```
 
 ### Specify a Date
@@ -75,7 +75,7 @@ source .env
 Generate a report for a specific date:
 
 ```bash
-./dev.sh --date 2025-01-15
+./dev.sh python argo_report.py --date 2025-01-15
 ```
 
 ### Filter by Workflow Phase
@@ -83,7 +83,7 @@ Generate a report for a specific date:
 Generate a report for failed workflows:
 
 ```bash
-./dev.sh --phase Failed
+./dev.sh python argo_report.py --phase Failed
 ```
 
 Available phases: `Succeeded`, `Failed`, `Running`, `Pending`
@@ -93,7 +93,7 @@ Available phases: `Succeeded`, `Failed`, `Running`, `Pending`
 Generate a report spanning multiple days:
 
 ```bash
-./dev.sh --date 2025-01-01 --days 7
+./dev.sh python argo_report.py --date 2025-01-01 --days 7
 ```
 
 ### Filter by Workflow Name
@@ -102,16 +102,16 @@ Filter workflows by name using regex patterns:
 
 ```bash
 # Exact workflow name
-./dev.sh --workflow "my-workflow" --date 2025-10-15 --days 30
+./dev.sh python argo_report.py --workflow "my-workflow" --date 2025-10-15 --days 30
 
 # Pattern matching (all workflows starting with "etl-")
-./dev.sh --workflow "^etl-"
+./dev.sh python argo_report.py --workflow "^etl-"
 
 # Multiple patterns (workflows containing "data" or "sync")
-./dev.sh --workflow "data|sync"
+./dev.sh python argo_report.py --workflow "data|sync"
 
 # Combine with other filters
-./dev.sh --workflow "^daily-" 
+./dev.sh python argo_report.py --workflow "^daily-" 
 ```
 
 ### Custom Output File
@@ -119,7 +119,7 @@ Filter workflows by name using regex patterns:
 Specify a custom output file:
 
 ```bash
-./dev.sh --output ./reports/my_report.html
+./dev.sh python argo_report.py --output ./reports/my_report.html
 ```
 
 ### Upload to S3
@@ -129,7 +129,7 @@ To enable S3 upload, simply set the `S3_BUCKET` environment variable:
 ```bash
 export S3_BUCKET="my-argo-reports-bucket"
 export S3_PREFIX="reports/"
-./dev.sh
+./dev.sh python argo_report.py
 ```
 
 The script will automatically:
@@ -140,7 +140,7 @@ The script will automatically:
 ### Combined Example
 
 ```bash
-S3_BUCKET="my-bucket" ./dev.sh \
+S3_BUCKET="my-bucket" ./dev.sh python argo_report.py \
   --date 2025-01-15 \
   --days 3 \
   --phase Succeeded
@@ -263,7 +263,7 @@ export AWS_SECRET_ACCESS_KEY="your-aws-secret"
 
 # Or use .env file (but never commit it to git!)
 source .env
-./dev.sh
+./dev.sh python argo_report.py
 ```
 
 ## Example Output
@@ -307,7 +307,7 @@ Schedule daily reports with automatic S3 upload:
 ```bash
 # Add to crontab (crontab -e)
 # Run daily at 8 AM
-0 8 * * * cd /path/to/argo-report && source .env && ./dev.sh >> /var/log/argo-report.log 2>&1
+0 8 * * * cd /path/to/argo-report && source .env && ./dev.sh python argo_report.py >> /var/log/argo-report.log 2>&1
 ```
 
 ## Troubleshooting

@@ -18,8 +18,7 @@ docker run --rm -it \
   -e ARGO_API_URL="${ARGO_API_URL}" \
   -e S3_BUCKET="${S3_BUCKET}" \
   -w "$DIR" \
-  $IMAGE_TAG \
-  python argo_report.py "$@"
+  $IMAGE_TAG
 popd 1>/dev/null
 
 
