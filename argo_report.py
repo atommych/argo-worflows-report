@@ -28,7 +28,7 @@ class Config:
     def __init__(self):
         self.api_url = os.getenv('ARGO_API_URL','')
         self.bearer_token = os.getenv('ARGO_BEARER_TOKEN', '')
-        self.namespace = os.getenv('ARGO_NAMESPACE', 'default')
+        self.namespace = os.getenv('ARGO_NAMESPACE', 'datalab')
         self.workflow_limit = int(os.getenv('ARGO_WORKFLOW_LIMIT', '1000'))
         self.output_file = None  # Will be set dynamically
 
