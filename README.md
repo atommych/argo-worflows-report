@@ -14,6 +14,13 @@ A Python script to generate detailed reports and timeline visualizations of Argo
 - ✅ **Interactive Timeline**: Generate interactive HTML timeline charts using Plotly
 - ✅ **S3 Upload**: Automatically upload reports to S3 for static website hosting
 
+## 📊 Preview
+
+> 🔗 [**View Interactive Report**](https://htmlpreview.github.io/?https://github.com/atommych/argo-worflows-report/blob/master/argo_reports/argo_wfs_2025_10_25_days_10.html)
+
+> 🔗 [**View Interactive Report**](https://htmlpreview.github.io/?https://github.com/atommych/argo-worflows-report/blob/master/argo_reports/argo_wfs_2026_04_28_days_9.html)
+
+
 ## Installation
 
 1. Install required dependencies:
